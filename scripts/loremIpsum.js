@@ -15,7 +15,7 @@ const getLetters = (number) => {
   while (randomWords.length <= number) {
     randomWords += paragraphs[randomIndex];
   }
-  const countedWords = randomWords.slice(0, number);
+  const countedWords = randomWords.slice(0, number).toLowerCase();
 
   return `<p>${countedWords}</p>`;
 }
@@ -40,13 +40,13 @@ const getWords = (number) => {
  * @return {String} - Formatted paragraphs of the specified number.
  */
 const getParagraphs = (number) => {
-  let paragraphs = [paragraphs[0]];
-  while (paragraphs.length < number) {
-    paragraphs.push(paragraph[randomIndex]);
+  let paragraphs_ = [paragraphs[0]];
+  while (paragraphs_.length < number) {
+    paragraphs_.push(paragraphs[randomIndex]);
   }
-  paragraphs = paragraphs.map(paragraph => `<p>${paragraph}</p>`);
+  paragraphs_ = paragraphs_.map(paragraph => `<p>${paragraph}</p>`);
 
-  return paragraphs.join(' ');
+  return paragraphs_.join(' ');
 }
 
 module.exports.get = {
