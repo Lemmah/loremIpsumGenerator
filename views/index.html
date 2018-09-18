@@ -21,14 +21,14 @@
       <main role="main" class="inner cover">
         <h4 class="cover-heading text-left">Generate Lorem Ipsum placeholder text. Select the number of characters, words, sentences or paragraphs, and hit generate!</h4>
         <p class="lead" id="ipsum">{{loremIpsumText}}</p>
-          <form class="form-inline">
+          <form class="form-inline" method="GET" action="/">
             <div class="form-group mb-2">
               <label for="numberOfElements" class="sr-only">Number of Elements</label>
-              <input type="number" class="form-control" id="numberOfElements" value="1">
+              <input name="numberOfElements" type="number" class="form-control" id="numberOfElements" value="1">
             </div>
             <div class="form-group mx-sm-3 mb-2">
               <label for="elements" class="sr-only">Password</label>
-              <select id="elements" class="form-control">
+              <select name="elements" id="elements" class="form-control">
                 <option value="paragraphs" selected>paragraphs</option>
                 <option value="words">words</option>
                 <option value="letters">letters</option>
