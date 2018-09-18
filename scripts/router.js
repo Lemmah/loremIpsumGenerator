@@ -1,6 +1,6 @@
 const fs = require('fs');
 const querystring = require('querystring');
-const indexHtml = fs.readFileSync('./views/index.html', {encoding: 'utf8'});
+const renderer = require('./renderer.js');
 
 /**
  * Gets resources that are fetchable. ie Static files and query result.
@@ -15,7 +15,7 @@ const fetchResource = (request, response) => {
     const query = querystring.parse(request.url.slice(2));
     console.log(query);
     response.writeHead(200, {'Content-type': 'text/html'});
-    response.write(indexHtml);
+    renderer.view('./views/index.html', {loremIpsumText: "Lorem Ipsum sit dor"}, response);
   } else if(isStatic) {
     const resource = fs.readFileSync(`.${request.url}`);
     response.write(resource);
@@ -30,7 +30,7 @@ const fetchResource = (request, response) => {
 const route = (request, response) => {
   if (request.url === '/') {
     response.writeHead(200, {'Content-type': 'text/html'});
-    response.write(indexHtml);
+    renderer.view('./views/index.html', {}, response);
   } else {
     fetchResource(request, response);
   }
