@@ -19,8 +19,8 @@
         </div>
       </header>
       <main role="main" class="inner cover">
-        <h4 class="cover-heading text-left">Generate Lorem Ipsum placeholder text. Select the number of characters, words, sentences or paragraphs, and hit generate!</h4>
-        <p class="lead" id="ipsum">{{loremIpsumText}}</p>
+        <h4 class="cover-heading text-left" id="info">Generate Lorem Ipsum placeholder text. Select the number of characters, words, sentences or paragraphs, and hit generate!</h4>
+        <div class="text-justify" id="ipsum">{{loremIpsumText}}</div>
           <form class="form-inline" method="GET" action="/">
             <div class="form-group mb-2">
               <label for="numberOfElements" class="sr-only">Number of Elements</label>
@@ -49,8 +49,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script>
       const ipusum = document.getElementById('ipsum');
+      const info = document.getElementById('info');
+      const header = document.querySelector('header');
       const noIpsum = (ipsum.textContent === '{{loremIpsumText}}');
-      noIpsum ? ipsum.style.display = 'none' : null;
+      if(noIpsum) {
+        ipsum.style.display = 'none';
+      } else {
+        header.classList.remove('mb-auto');
+        info.style.display = 'none';
+        ipsum.style.display = 'block';
+        ipsum.classList.add('card');
+        ipsum.style.padding = '16px';
+        ipsum.style.margin = '8px';
+        ipsum.style.color = 'black';
+      }
     </script>
   </body>
 </html>
