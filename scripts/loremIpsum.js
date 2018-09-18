@@ -23,11 +23,11 @@ const randomIndex = entity => {
  * @return {String} - A lowercase string with the number of words requested.
  */
 const getWords = (number) => {
-  let randomWords = paragraphs[randomIndex('paragraph')].replace('.', '').split(' ');
+  let randomWords = paragraphs[randomIndex('paragraph')].split(' ');
   while (randomWords.length <= number) {
-    randomWords.concat(paragraphs[randomIndex('paragraph')].replace('.', '').split(' '));
+    randomWords = randomWords.concat(paragraphs[randomIndex('paragraph')].split(' '));
   }
-  return randomWords.slice(0, number).join(' ').toLowerCase();
+  return randomWords.slice(0, number).join(' ').toLowerCase().replace('.', '');
 }
 
 module.exports.firstParagraph = paragraphs[0];
