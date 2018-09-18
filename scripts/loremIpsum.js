@@ -2,20 +2,23 @@ const fs = require('fs');
 const loremIpsumBuffer = fs.readFileSync('./data/loremIpsum.json');
 const loremIpsum = JSON.parse(loremIpsumBuffer.toString());
 const paragraphs = loremIpsum.paragraphs;
+// There are only 5 paragraphs thus we need to get a random index within range.
+const randomIndex = Math.floor(Math.random() * 4) + 1;
 
 /**
- * Gets a random number to be used as an index to access entities
- * such as letters or paragraphs. ie paragraphs[randomIndex(entity)];
- * @param {String} entity - The name of the entity ie paragraph or letter.
- * @return {Number} - The random index within range of available entities.
+ * Returns sentence(s) with a given number of characters/letters.
+ * @param {String} number - The number of letters to return.
+ * @return {String} - Sentence(s) with the specified number of words. 
  */
-const randomIndex = entity => {
-  if (entity === 'paragraph') {
-    return Math.floor(Math.random() * 4) + 1;
-  } else if (entity === 'letter') {
-    return Math.floor(Math.random() * 5) + 1;
+const getLetters = (number) => {
+  let randomWords = paragraphs[randomIndex];
+  while (randomWords.length <= number) {
+    randomWords += paragraphs[randomIndex];
   }
-};
+  const countedWords = randomWords.slice(0, number);
+
+  return `<p>${countedWords}</p>`;
+}
 
 /**
  * Gets number of words specified from the lorem ipsum data.
@@ -23,13 +26,31 @@ const randomIndex = entity => {
  * @return {String} - A lowercase string with the number of words requested.
  */
 const getWords = (number) => {
-  let randomWords = paragraphs[randomIndex('paragraph')].split(' ');
+  let randomWords = paragraphs[randomIndex].split(' ');
   while (randomWords.length <= number) {
-    randomWords = randomWords.concat(paragraphs[randomIndex('paragraph')].split(' '));
+    randomWords = randomWords.concat(paragraphs[randomIndex].split(' '));
   }
-  return randomWords.slice(0, number).join(' ').toLowerCase().replace('.', '');
+  const countedWords = randomWords.slice(0, number).join(' ').toLowerCase().replace('.', '');
+  return `<p>${countedWords}</p>`;
 }
 
-module.exports.firstParagraph = paragraphs[0];
-module.exports.randomParagraph = paragraphs[randomIndex('paragraph')];
-module.exports.getWords = getWords;
+/**
+ * Generates the number of paragraphs specified.
+ * @param {Number} number - The number of paragraphs to be generated.
+ * @return {String} - Formatted paragraphs of the specified number.
+ */
+const getParagraphs = (number) => {
+  let paragraphs = [paragraphs[0]];
+  while (paragraphs.length < number) {
+    paragraphs.push(paragraph[randomIndex]);
+  }
+  paragraphs = paragraphs.map(paragraph => `<p>${paragraph}</p>`);
+
+  return paragraphs.join(' ');
+}
+
+module.exports.get = {
+  letters: getLetters,
+  words: getWords,
+  paragraphs: getParagraphs
+}
