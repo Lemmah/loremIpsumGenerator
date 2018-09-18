@@ -1,6 +1,7 @@
 const fs = require('fs');
 const querystring = require('querystring');
 const renderer = require('./renderer.js');
+const loremIpsum = require('./loremIpsum.js');
 
 /**
  * Gets resources that are fetchable. ie Static files and query result.
@@ -15,7 +16,8 @@ const fetchResource = (request, response) => {
     const query = querystring.parse(request.url.slice(2));
     console.log(query);
     response.writeHead(200, {'Content-type': 'text/html'});
-    renderer.view('./views/index.html', {loremIpsumText: "Lorem Ipsum sit dor"}, response);
+    const values = {loremIpsumText: loremIpsum.get[query.elements](query.numberOfElements)};
+    renderer.view('./views/index.html', values , response);
   } else if(isStatic) {
     const resource = fs.readFileSync(`.${request.url}`);
     response.write(resource);
